@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Events
+    match /events/{eventId} {
+      // Anyone with the link can view the event
+      allow read: if true;
+      
+      // Anyone can create an event
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.startDate is string
+                    && request.resource.data.endDate is string;
+      
+      // Allow update / delete
+      allow update, delete: if true;
+
+      // Participants subcollection
+      match /participants/{participantId} {
+        // Anyone can view participants and aggregate availability
+        allow read: if true;
+        
+        // Anyone can create or update their own response
+        allow create, update: if request.resource.data.name is string
+                              && request.resource.data.unavailableDates is list;
+        
+        // Allow removing a response
+        allow delete: if true;
+      }
+    }
+  }
+}
