@@ -36,7 +36,7 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
   onDragEnd
 }) => {
   return (
-    <div className="bg-white rounded-3xl p-4 sm:p-6 border border-stone-200/80 mb-6 shadow-sm shadow-stone-200/40">
+    <div className="bg-white rounded-3xl p-3 sm:p-6 border border-stone-200/80 mb-6 shadow-sm shadow-stone-200/40">
       {/* Month Header */}
       <div className="flex items-center justify-between mb-4 px-1 pb-2 border-b border-stone-100">
         <h3 className="text-base font-semibold text-stone-900 tracking-tight flex items-center gap-2">
@@ -63,13 +63,11 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
 
       {/* Grid */}
       <div
-        className="grid grid-cols-7 gap-1.5 sm:gap-2 select-none"
-        onMouseLeave={() => onDragEnd && onDragEnd()}
-        onTouchEnd={() => onDragEnd && onDragEnd()}
+        className="grid grid-cols-7 gap-1 sm:gap-2 select-none"
       >
         {/* Leading offset days */}
         {Array.from({ length: month.startOffset }).map((_, i) => (
-          <div key={`empty-${i}`} className="min-h-[54px] sm:min-h-[66px]" />
+          <div key={`empty-${i}`} className="min-h-[68px] sm:min-h-[80px]" />
         ))}
 
         {month.days.map((day: CalendarDay) => {
@@ -79,7 +77,7 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
             return (
               <div
                 key={dateString}
-                className="min-h-[54px] sm:min-h-[66px] rounded-2xl p-1.5 sm:p-2 border border-dashed border-stone-100 bg-stone-50/30 flex flex-col items-center justify-start opacity-30 pointer-events-none"
+                className="min-h-[68px] sm:min-h-[80px] rounded-xl sm:rounded-2xl p-1.5 sm:p-2 border border-dashed border-stone-100 bg-stone-50/30 flex flex-col items-center justify-start opacity-30 pointer-events-none"
               >
                 <span className="text-xs font-normal text-stone-400">{dayNumber}</span>
               </div>
@@ -93,17 +91,8 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
               <button
                 key={dateString}
                 type="button"
-                onMouseDown={() => {
-                  onDragStart && onDragStart(dateString);
-                  onToggleDate(dateString);
-                }}
-                onMouseEnter={() => {
-                  onDragEnter && onDragEnter(dateString);
-                }}
-                onTouchStart={() => {
-                  onToggleDate(dateString);
-                }}
-                className={`min-h-[54px] sm:min-h-[66px] rounded-2xl p-1.5 sm:p-2 flex flex-col items-center justify-between border transition-all duration-150 cursor-pointer active:scale-95 touch-manipulation relative overflow-hidden group ${
+                onClick={() => onToggleDate(dateString)}
+                className={`min-h-[68px] sm:min-h-[80px] rounded-xl sm:rounded-2xl p-1.5 sm:p-2 flex flex-col items-center justify-between border transition-all duration-150 cursor-pointer active:scale-[0.98] touch-manipulation relative overflow-hidden group ${
                   isUnavailable
                     ? 'bg-rose-50 border-rose-200 text-rose-800 shadow-2xs'
                     : 'bg-white hover:bg-stone-50 border-stone-200/90 text-stone-800 hover:border-stone-300'
@@ -112,7 +101,7 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
                 {/* Header: day number */}
                 <div className="w-full flex items-center justify-between">
                   <span
-                    className={`text-xs sm:text-sm font-semibold leading-none ${
+                    className={`text-sm sm:text-base font-semibold leading-none ${
                       isUnavailable
                         ? 'line-through text-rose-500'
                         : isWeekend
@@ -133,11 +122,11 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
                 {/* Status label */}
                 <div className="w-full text-center mt-0.5">
                   {isUnavailable ? (
-                    <span className="text-[10px] font-semibold text-rose-600 block truncate">
+                    <span className="text-[10px] sm:text-xs font-semibold text-rose-600 block truncate">
                       Can't do
                     </span>
                   ) : (
-                    <span className="text-[10px] font-normal text-stone-600 group-hover:text-stone-700 block truncate">
+                    <span className="text-[10px] sm:text-xs font-normal text-stone-600 group-hover:text-stone-700 block truncate">
                       Available
                     </span>
                   )}
@@ -190,10 +179,10 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
               key={dateString}
               type="button"
               onClick={() => onSelectDayDetails && onSelectDayDetails(dateString)}
-              className={`min-h-[54px] sm:min-h-[66px] rounded-2xl p-1.5 sm:p-2 flex flex-col items-center justify-between border transition-all duration-150 cursor-pointer active:scale-95 touch-manipulation relative overflow-hidden ${cardStyle}`}
+              className={`min-h-[68px] sm:min-h-[80px] rounded-xl sm:rounded-2xl p-1.5 sm:p-2 flex flex-col items-center justify-between border transition-all duration-150 cursor-pointer active:scale-[0.98] touch-manipulation relative overflow-hidden ${cardStyle}`}
             >
               <div className="w-full flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-semibold leading-none">
+                <span className="text-sm sm:text-base font-semibold leading-none">
                   {dayNumber}
                 </span>
 
@@ -207,18 +196,18 @@ export const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({
                 {totalResponders > 0 ? (
                   <>
                     <span
-                      className={`text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded-lg leading-tight truncate ${badgeStyle}`}
+                      className={`text-[10px] sm:text-xs px-1.5 py-0.5 rounded-lg leading-tight truncate ${badgeStyle}`}
                     >
                       {availableCount}/{totalResponders}
                     </span>
                     <span
-                      className="text-[9px] font-normal text-stone-600 mt-0.5 truncate"
+                      className="hidden sm:block text-[9px] font-normal text-stone-600 mt-0.5 truncate"
                     >
                       {textStatus}
                     </span>
                   </>
                 ) : (
-                  <span className="text-[10px] text-stone-600">Free</span>
+                  <span className="text-[10px] sm:text-xs text-stone-600">Free</span>
                 )}
               </div>
             </button>
